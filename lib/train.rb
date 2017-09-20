@@ -31,7 +31,7 @@ class Train
     DB.exec("UPDATE trains SET name = '#{self.name}', color = '#{@color}' WHERE id = '#{@id}';")
   end
 
-  def delete
-    DB.exec("DELETE FROM trains WHERE id = '#{@id}';")
+  def self.delete(id)
+    DB.exec("DELETE FROM trains WHERE id = '#{id}';")
   end
 end

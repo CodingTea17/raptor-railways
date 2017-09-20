@@ -1,0 +1,80 @@
+
+<div class="row justify-content-md-center">
+  <div class="col-md-6">
+    <div class="alert alert-success">
+      <h1>ADMIN VIEW</h1>
+    </div>
+  </div>
+</div>
+<div class="row justify-content-md-center">
+  <div class="col-md-6">
+    <form class="" action="/city" method="post">
+      <div class="form-group">
+        <label for="name">Enter a City:</label>
+        <input class="form-control" type="text" name="name" autofocus="autofocus" required>
+      </div>
+      <button type="submit" class= 'btn btn-success btn-block'>Add a new City</button>
+    </form>
+  </div>
+</div><br>
+<div class="row justify-content-md-center">
+  <div class="col-md-6">
+    <% if @cities.any? %>
+      <% @cities.each do |city| %>
+      <form action="/city/<%= city.id %>" method="post">
+        <input name="_method" type="hidden" value="delete">
+        <!-------------------------------------------------->
+        <p>
+          <a href="/city/<%= city.name %>/<%= city.id %>">
+            <button class="btn btn-warning" type="button">Update</button>
+          </a>
+          <button class="btn btn-danger" type="submit">Delete</button>
+          City: <%= city.name %>, ID: <%= city.id %>
+        </p>
+        <!-------------------------------------------------->
+      </form>
+      <% end %>
+    <% else %>
+      <h3>No cities yet dawgg....</h3>
+    <% end %>
+  </div>
+</div>
+
+<div class="row justify-content-md-center">
+  <div class="col-md-6">
+    <form class="" action="/train" method="post">
+      <div class="form-group">
+        <label for="name">Enter a Train Name:</label>
+        <input class="form-control" type="text" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="color">Enter a Color:</label>
+        <input class="form-control" type="text" name="color" required>
+      </div>
+      <button type="submit" class= 'btn btn-success btn-block'>Add a new Train</button>
+    </form>
+  </div>
+</div><br>
+
+<div class="row justify-content-md-center">
+  <div class="col-md-6">
+    <% if @trains.any? %>
+      <% @trains.each do |train| %>
+      <form action="/train/<%= train.id %>" method="post">
+        <input name="_method" type="hidden" value="delete">
+        <!-------------------------------------------------->
+        <p>
+          <a href="/train/update/<%= train.id %>">
+            <button class="btn btn-warning" type="button">Update</button>
+          </a>
+          <button class="btn btn-danger" type="submit">Delete</button>
+          Train: <%= train.name %>, ID: <%= train.id %>
+        </p>
+        <!-------------------------------------------------->
+      </form>
+      <% end %>
+    <% else %>
+      <h3>No trains yet dawgg....</h3>
+    <% end %>
+  </div>
+</div><br>
