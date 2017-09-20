@@ -38,5 +38,21 @@ describe ('City') do
     end
   end
 
+  describe '#update' do
+    it 'will update a row in the cities table' do
+      city = City.new({name: 'Portland', id: nil})
+      city.save
+      city.update({name: 'Seattle', id: city.id})
+      expect(City.all).to eq([city])
+    end
+  end
 
+  describe '#delete' do
+    it 'will delete a row in the cities table' do
+      city = City.new({name: 'Portland', id: nil})
+      city.save
+      city.delete
+      expect(City.all).to(eq([]))
+    end
+  end
 end

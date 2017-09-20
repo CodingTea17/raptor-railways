@@ -3,6 +3,7 @@ require "pg"
 require "city"
 require 'train'
 require 'pry'
+require 'route'
 
 
 DB = PG.connect({dbname: "raptor_railways_test"})

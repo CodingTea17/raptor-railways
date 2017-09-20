@@ -23,4 +23,15 @@ class Train
   def ==(another_train)
     self.name.==(another_train.name) and self.color.==(another_train.color) and self.id.==(another_train.id)
   end
+
+  def update(choo_choo)
+    @name = choo_choo[:name]
+    @color = choo_choo[:color]
+    @id = self.id
+    DB.exec("UPDATE trains SET name = '#{self.name}', color = '#{@color}' WHERE id = '#{@id}';")
+  end
+
+  def delete
+    DB.exec("DELETE FROM trains WHERE id = '#{@id}';")
+  end
 end
