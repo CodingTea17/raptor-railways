@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'pry'
 require 'sinatra/reloader'
-also_reload '.lib/**/*.rb'
+also_reload '.lib/*.rb'
 require './lib/route'
 require './lib/train'
 require './lib/city'
@@ -15,44 +15,74 @@ get('/') do
 end
 
 get('/admin') do
+  @routes = Route.all
   @cities = City.all
   @trains = Train.all
   erb(:admin)
 end
 
 post('/city') do
-  a_city = City.new({name: params["name"], id: nil})
-  a_city.save
+  City.new({name: params["name"]}).save
   redirect('/admin')
 end
 
-get('/city/:name/:id') do
-  @name = params[:name]
-  @id = params[:id]
+get('/city/update/:id') do
+  @city = City.find(params["id"])
   erb(:city)
 end
 
 patch('/city/update/:id') do
-  name = params["name"]
-  City.update(name, params[:id])
+  City.find(params[:id]).update({:name => params["name"]})
   redirect('/admin')
 end
 
 delete('/city/:id') do
-  City.delete(params[:id])
+  City.find(params[:id]).delete
   redirect('/admin')
 end
 
 post('/train') do
-  a_choo_choo = Train.new({name: params["name"], color: params["color"]})
-  a_choo_choo.save
+  Train.new({name: params["name"], color: params["color"]}).save
+  redirect('/admin')
+end
+
+get('/train/update/:id') do
+  @train = Train.find(params[:id])
+  erb(:train)
+end
+
+patch('/train/update/:id') do
+  Train.find(params[:id]).update({:name => params["name"], :color => params["color"]})
   redirect('/admin')
 end
 
 delete('/train/:id') do
-  Train.delete(params[:id])
+  Train.find(params[:id]).delete
   redirect('/admin')
 end
+
+post ('/route') do
+  Route.new({:city_start_id => params['city_start_id'], :city_end_id => params['city_end_id'], :train_id => params['train_id'], :time => params['time']}).save
+  redirect('/admin')
+end
+
+get('/route/update/:id') do
+  @cities = City.all
+  @trains = Train.all
+  @route = Route.find(params[:id])
+  erb(:route)
+end
+
+patch('/route/update/:id') do
+  Route.find(params['id']).update({:city_start_id => params['city_start_id'], :city_end_id => params['city_end_id'], :train_id => params['train_id'], :time => params['time']})
+  redirect('/admin')
+end
+
+delete('/route/:id') do
+  Route.find(params[:id]).delete
+  redirect('/admin')
+end
+
 
 get('/home') do
   erb(:home)

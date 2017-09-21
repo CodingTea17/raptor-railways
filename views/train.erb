@@ -1,0 +1,25 @@
+<div class="row justify-content-md-center">
+  <div class="col-md-6">
+    <div class="alert alert-success">
+      <h1>ADMIN VIEW</h1>
+    </div>
+  </div>
+</div>
+
+<div class="row justify-content-md-center">
+  <div class="col-md-6">
+    <h1><%=@train.name + " | " + @train.color %></h1>
+    <form class="" action="/train/update/<%= @train.id %>" method="post">
+      <input name="_method" type="hidden" value="patch">
+      <div class="form-group">
+        <label for="name">Rename the train:</label>
+        <input class="form-control" type="text" name="name" autofocus="autofocus" required>
+      </div>
+      <div class="form-group">
+        <label for="color">Repaint the train:</label>
+        <input class="form-control" type="text" name="color" autofocus="autofocus" required>
+      </div>
+      <button type="submit" class= 'btn btn-success btn-block'>Update Train</button>
+    </form>
+  </div>
+</div>

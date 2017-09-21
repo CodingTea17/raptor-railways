@@ -25,7 +25,7 @@
         <input name="_method" type="hidden" value="delete">
         <!-------------------------------------------------->
         <p>
-          <a href="/city/<%= city.name %>/<%= city.id %>">
+          <a href="/city/update/<%= city.id %>">
             <button class="btn btn-warning" type="button">Update</button>
           </a>
           <button class="btn btn-danger" type="submit">Delete</button>
@@ -68,7 +68,7 @@
             <button class="btn btn-warning" type="button">Update</button>
           </a>
           <button class="btn btn-danger" type="submit">Delete</button>
-          Train: <%= train.name %>, ID: <%= train.id %>
+          Train: <%= train.name %>, Color: <%= train.color %>, ID: <%= train.id %>
         </p>
         <!-------------------------------------------------->
       </form>
@@ -78,3 +78,67 @@
     <% end %>
   </div>
 </div><br>
+
+
+  <div class="row justify-content-md-center">
+    <div class="col-md-6">
+      <% if @trains.any? and @cities.any? %>
+        <form class="" action="/route" method="post">
+          <div class="form-group">
+            <label for="city_start_id">Select a Start City</label>
+            <select class="form-control" name='city_start_id' type='text'>
+              <% @cities.each() do |city| %>
+                <option value="<%= city.id %>"> <%= city.name %> </option>
+              <% end %>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="city_end_id">Select an End City</label>
+            <select class="form-control" name='city_end_id' type='text'>
+              <% @cities.each() do |city| %>
+                <option value="<%= city.id %>"> <%= city.name %> </option>
+              <% end %>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="train_id">Select a Train</label>
+            <select class="form-control" name='train_id' type='text'>
+              <% @trains.each() do |train| %>
+                <option value="<%= train.id %>"> <%= train.name %> </option>
+              <% end %>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for "time">Select a time</label>
+            <input class='form-control' type="datetime-local" name="time">
+          </div>
+          <button type="submit" class= 'btn btn-success btn-block'>Create a new Route</button>
+        </form>
+      <% else %>
+        <h3>No routes available dawgg....Add some trains and cities first.</h3>
+      <% end %>
+    </div>
+  </div><br>
+
+  <div class="row justify-content-md-center">
+    <div class="col-md-6">
+      <% if @routes.any? %>
+        <% @routes.each do |route| %>
+        <form action="/route/<%= route.id %>" method="post">
+          <input name="_method" type="hidden" value="delete">
+          <!-------------------------------------------------->
+          <p>
+            <a href="/route/update/<%= route.id %>">
+              <button class="btn btn-warning" type="button">Update</button>
+            </a>
+            <button class="btn btn-danger" type="submit">Delete</button>
+            City Start: <%= City.find(route.city_start_id).name %>, City End: <%= City.find(route.city_end_id).name %>, Train: <%= Train.find(route.train_id).name %>, ID: <%= route.id %>
+          </p>
+          <!-------------------------------------------------->
+        </form>
+        <% end %>
+      <% else %>
+        <h3>No routes yet dawgg....</h3>
+      <% end %>
+    </div>
+  </div>

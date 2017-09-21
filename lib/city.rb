@@ -30,8 +30,8 @@ class City
     self.name.==(another_city.name) and self.id.==(another_city.id)
   end
 
-  def update(name)
-    @name = name
+  def update(update_info)
+    @name = update_info[:name]
     DB.exec("UPDATE cities SET name = '#{@name}' WHERE id = #{self.id};")
   end
 
