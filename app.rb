@@ -44,7 +44,7 @@ delete('/city/:id') do
 end
 
 post('/train') do
-  a_choo_choo = Train.new({name: params["name"], color: params["color"], id: nil})
+  a_choo_choo = Train.new({name: params["name"], color: params["color"]})
   a_choo_choo.save
   redirect('/admin')
 end

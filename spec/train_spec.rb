@@ -27,22 +27,31 @@ RSpec.describe Train do
     it ('will save a choo choo to the db and return an id') do
      train = Train.new({name: 'Golden Raptor', color: 'Gold', id: nil})
      train.save
-     expect(train.id).to(be_an_instance_of(Integer))
+     expect(train.id).to(be_an_instance_of(Fixnum))
     end
   end
 
   describe '#update' do
     it 'will update a row in the choo choo table' do
-      train = Train.new({name: 'Golden Raptor', color: 'Gold', id: nil})
+      train = Train.new({name: 'Golden Raptor', color: 'Gold'})
       train.save
       train.update({name: 'Silver Raptor', color: 'Silver', id: train.id})
       expect(Train.all).to eq([train])
     end
   end
 
+  describe('.find') do
+    it('will find a train in the database by it id') do
+      train = Train.new({name: 'Golden Raptor', color: 'Gold'})
+      id = train.save
+      expect(Train.find(id)).to eq(train)
+    end
+  end
+
+
   describe '#delete' do
     it 'will delete a row in the choo choo table' do
-      train = Train.new({name: 'Golden Raptor', color: 'Gold', id: nil})
+      train = Train.new({name: 'Golden Raptor', color: 'Gold'})
       train.save
       train.delete
       expect(Train.all).to(eq([]))

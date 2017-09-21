@@ -26,6 +26,11 @@ class Route
     self.city_start_id.==(another_route.city_start_id) and self.city_end_id.==(another_route.city_end_id) and self.id.==(another_route.id) and self.train_id.==(another_route.train_id) and self.time.==(another_route.time)
   end
 
+  def self.find(id)
+    returned_route = DB.exec("SELECT * FROM routes WHERE id = #{id};").first
+    Route.new({city_start_id: returned_route['city_start_id'].to_i, city_end_id: returned_route['city_end_id'].to_i, train_id: returned_route['train_id'].to_i, time: returned_route['time'], id: returned_route['id'].to_i})
+  end
+
   def search(start_c, end_c)
 
   end
@@ -40,6 +45,6 @@ class Route
   end
 
   def delete
-    DB.exec("DELETE FROM routes WHERE id = '#{@id}';")
+    DB.exec("DELETE FROM routes WHERE id = #{@id};")
   end
 end

@@ -17,21 +17,26 @@ class City
     cities.sort_by {|city| city.name}
   end
 
+  def self.find(id)
+    returned_city = DB.exec("SELECT * FROM cities WHERE id = #{id};").first
+    City.new({:name => returned_city['name'], :id => returned_city['id'].to_i})
+  end
+
   def save
     @id = DB.exec("INSERT INTO cities (name) VALUES ('#{self.name}') RETURNING ID;").first['id'].to_i
   end
 
   def ==(another_city)
-      self.name.==(another_city.name) and self.id.==(another_city.id)
+    self.name.==(another_city.name) and self.id.==(another_city.id)
   end
 
-  def self.update(name, id)
+  def update(name)
     @name = name
-    DB.exec("UPDATE cities SET name = '#{@name}' WHERE id = '#{id}';")
+    DB.exec("UPDATE cities SET name = '#{@name}' WHERE id = #{self.id};")
   end
 
-  def self.delete(id)
-    DB.exec("DELETE FROM cities WHERE id = '#{id}';")
+  def delete()
+    DB.exec("DELETE FROM cities WHERE id = #{self.id};")
   end
 
 end

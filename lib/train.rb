@@ -16,6 +16,11 @@ class Train
     trains.sort_by {|train| train.name}
   end
 
+  def self.find(id)
+    returned_train = DB.exec("SELECT * FROM trains WHERE id = #{id}").first
+    Train.new({:name => returned_train['name'], :color => returned_train['color'], :id => returned_train['id'].to_i})
+  end
+
   def save
     @id = DB.exec("INSERT INTO trains (name, color) VALUES ('#{self.name}', '#{self.color}') RETURNING id;").first['id'].to_i
   end
@@ -27,11 +32,10 @@ class Train
   def update(choo_choo)
     @name = choo_choo[:name]
     @color = choo_choo[:color]
-    @id = self.id
-    DB.exec("UPDATE trains SET name = '#{self.name}', color = '#{@color}' WHERE id = '#{@id}';")
+    DB.exec("UPDATE trains SET name = '#{@name}', color = '#{@color}' WHERE id = '#{self.id}';")
   end
 
-  def self.delete(id)
-    DB.exec("DELETE FROM trains WHERE id = '#{id}';")
+  def delete
+    DB.exec("DELETE FROM trains WHERE id = #{self.id};")
   end
 end
