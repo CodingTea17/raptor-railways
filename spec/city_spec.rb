@@ -42,7 +42,7 @@ describe ('City') do
     it 'will update a row in the cities table' do
       city = City.new({name: 'Portland'})
       city.save
-      city.update('Seattle')
+      city.update({:name => 'Seattle'})
       expect(City.all).to eq([city])
     end
   end

@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'pry'
 require 'sinatra/reloader'
-also_reload '.lib/*.rb'
+also_reload '.lib/**/*.rb'
 require './lib/route'
 require './lib/train'
 require './lib/city'
@@ -37,8 +37,17 @@ patch('/city/update/:id') do
 end
 
 delete('/city/:id') do
-  City.find(params[:id]).delete
-  redirect('/admin')
+  if !(DB.exec("SELECT * FROM routes WHERE city_start_id = #{params[:id]} OR city_end_id = #{params[:id]};")).first
+    City.find(params[:id]).delete
+    redirect('/admin')
+  else
+    @conflict = City.find(params[:id]).name
+    @error = true
+  end
+  @routes = Route.all
+  @cities = City.all
+  @trains = Train.all
+  erb(:admin)
 end
 
 post('/train') do
@@ -57,8 +66,19 @@ patch('/train/update/:id') do
 end
 
 delete('/train/:id') do
-  Train.find(params[:id]).delete
-  redirect('/admin')
+  # Train.find(params[:id]).delete
+  # redirect('/admin')
+  if !(DB.exec("SELECT * FROM routes WHERE train_id = #{params[:id]};")).first
+    Train.find(params[:id]).delete
+    redirect('/admin')
+  else
+    @conflict = Train.find(params[:id]).name
+    @error = true
+  end
+  @routes = Route.all
+  @cities = City.all
+  @trains = Train.all
+  erb(:admin)
 end
 
 post ('/route') do
@@ -83,7 +103,23 @@ delete('/route/:id') do
   redirect('/admin')
 end
 
-
 get('/home') do
+  @cities = City.all
   erb(:home)
+end
+
+get('/results') do
+  @routes = Route.all
+  @cities = City.all
+  @trains = Train.all
+  erb(:results)
+end
+
+post ('/results') do
+  @available_routes = Route.search(params['city_start_id'], params['city_end_id'])
+
+  @routes = Route.all
+  @cities = City.all
+  @trains = Train.all
+  erb(:results)
 end

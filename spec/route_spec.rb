@@ -46,12 +46,23 @@ describe ('Route') do
       expect(Route.find(id)).to eq(route)
     end
   end
+
   describe '#delete' do
     it 'will delete a given route' do
       route = Route.new({city_start_id: 1, city_end_id: 2, train_id: 1, time: '2017-05-05 08:00:00'})
       route.save
       route.delete
       expect(Route.all).to eq([])
+    end
+  end
+
+  describe '#search' do
+    it 'will return matching routes' do
+      route_to_nowhere = Route.new({city_start_id: 3, city_end_id: 6, train_id: 1, time: '2017-05-05 08:00:00'})
+      route_to_nowhere.save
+      route_to_nowhere2 = Route.new({city_start_id: 3, city_end_id: 6, train_id: 2, time: '2017-05-09 08:00:00'})
+      route_to_nowhere2.save
+      expect(Route.search(3,6)).to eq([route_to_nowhere,route_to_nowhere2])
     end
   end
 end

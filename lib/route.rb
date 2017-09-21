@@ -31,8 +31,13 @@ class Route
     Route.new({city_start_id: returned_route['city_start_id'].to_i, city_end_id: returned_route['city_end_id'].to_i, train_id: returned_route['train_id'].to_i, time: returned_route['time'], id: returned_route['id'].to_i})
   end
 
-  def search(start_c, end_c)
-
+  def self.search(start_c, end_c)
+    returned_routes = DB.exec("SELECT * FROM routes WHERE city_start_id = #{start_c} AND city_end_id = #{end_c} ORDER BY \"time\";")
+    routes = []
+    returned_routes.each do |route|
+      routes.push(Route.new({city_start_id: route['city_start_id'].to_i, city_end_id: route['city_end_id'].to_i, train_id: route['train_id'].to_i, time: route['time'], id: route['id'].to_i}))
+    end
+    routes
   end
 
   def update(route)

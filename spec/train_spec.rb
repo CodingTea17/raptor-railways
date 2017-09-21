@@ -9,7 +9,7 @@ RSpec.describe Train do
 
   describe "#save" do
     it("will put a choo choo into the db") do
-      golden_raptor = Train.new({name: 'Golden Raptor', color: 'Gold', id: nil})
+      golden_raptor = Train.new({name: 'Golden Raptor', color: 'Gold'})
       golden_raptor.save
       expect(Train.all).to eq([golden_raptor])
     end
@@ -17,15 +17,15 @@ RSpec.describe Train do
 
   describe '.==' do
     it("will compare two choo choos") do
-      golden_raptor = Train.new({name: 'Golden Raptor', color: 'Gold', id: nil})
-      other_golden_raptor = Train.new({name: 'Golden Raptor', color: 'Gold', id: nil})
+      golden_raptor = Train.new({name: 'Golden Raptor', color: 'Gold'})
+      other_golden_raptor = Train.new({name: 'Golden Raptor', color: 'Gold'})
       expect(golden_raptor).to eq(other_golden_raptor)
     end
   end
 
   describe '#id' do
     it ('will save a choo choo to the db and return an id') do
-     train = Train.new({name: 'Golden Raptor', color: 'Gold', id: nil})
+     train = Train.new({name: 'Golden Raptor', color: 'Gold'})
      train.save
      expect(train.id).to(be_an_instance_of(Fixnum))
     end
@@ -35,7 +35,7 @@ RSpec.describe Train do
     it 'will update a row in the choo choo table' do
       train = Train.new({name: 'Golden Raptor', color: 'Gold'})
       train.save
-      train.update({name: 'Silver Raptor', color: 'Silver', id: train.id})
+      train.update({name: 'Silver Raptor', color: 'Silver'})
       expect(Train.all).to eq([train])
     end
   end

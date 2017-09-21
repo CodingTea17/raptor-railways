@@ -7,8 +7,27 @@
     <title>Raptor Railways</title>
   </head>
   <body>
-    <div class="container">
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <a class="navbar-brand" href="\home">Raptor Railways</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div id="main" class="container">
     <%= yield %>
     </div>
+    <footer class="footer navbar-dark bg-dark">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <a id="link-text" href="/admin">Administrative Settings</a>
+          </div>
+        </div>
+      </div>
+    </footer>
   </body>
+
 </html>

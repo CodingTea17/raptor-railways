@@ -1,0 +1,30 @@
+<div class="row justify-content-md-center">
+  <div class="col-md-8">
+    <h1>Results</h1>
+    <% if @available_routes.any? %>
+      <table class="table table-striped table-inverse">
+        <thead>
+          <tr>
+            <th>Starting City</th>
+            <th>Destination City</th>
+            <th>Train Name</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+      </tbody>
+          <% @available_routes.each do |route| %>
+            <tr>
+              <td><%= City.find(route.city_start_id).name %></td>
+              <td><%= City.find(route.city_end_id).name %></td>
+              <td><%= Train.find(route.train_id).name %></td>
+              <td><%= DateTime.parse(route.time).strftime("%m/%d/%Y %l:%M %p") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <%else %>
+      <h2>No Trains available</h2>
+    <%end%>
+    <a href="/home"<button class= 'btn btn-block btn-info'>Go Back</button></a>
+  </div>
+</div><br>
