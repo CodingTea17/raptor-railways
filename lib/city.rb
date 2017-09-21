@@ -27,7 +27,7 @@ class City
 
   def self.update(name, id)
     @name = name
-    DB.exec("UPDATE cities SET name = '#{self.name}' WHERE id = '#{id}';")
+    DB.exec("UPDATE cities SET name = '#{@name}' WHERE id = '#{id}';")
   end
 
   def self.delete(id)

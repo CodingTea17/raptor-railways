@@ -28,12 +28,13 @@ end
 
 get('/city/:name/:id') do
   @name = params[:name]
-erb(:city)
+  @id = params[:id]
+  erb(:city)
 end
 
-post('/city/update/:id') do
+patch('/city/update/:id') do
   name = params["name"]
-  City.delete(params[:id])
+  City.update(name, params[:id])
   redirect('/admin')
 end
 
